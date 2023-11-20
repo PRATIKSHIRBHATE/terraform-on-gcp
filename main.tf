@@ -25,9 +25,34 @@ resource "google_compute_instance" "terraform-vm" {
 	}
 
 	network_interface {
-		network = "default"
+		network = google_compute_network.terraform_network.self_link
+		subnetwork = google_compute_subnetwork.terraform_subnet.self_link
 		access_config {
 			//necessary even empty
 		}
 	}
+}
+
+resource "google_compute_network" "terraform_network" {
+	name = "terraform-network"
+	auto_create_subnetworks = false
+}
+
+resource "google_compute_subnetwork" "terraform_subnet" {
+	name = "terraform-subnetwork"
+	ip_cidr_range = "10.20.0.0/16"
+	region = "us-central1"
+	network = google_compute_network.terraform_network.id
+}
+
+resource "google_compute_firewall" "allow-ssh" {
+  name    = "allow-ssh"
+  network = google_compute_network.terraform_network.self_link
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
+  source_ranges = ["10.20.0.0/16", "0.0.0.0/0"]  # Adjust this to the specific IP range or ranges you want to allow for SSH.
 }
