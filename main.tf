@@ -7,10 +7,16 @@ provider "google" {
 }
 
 resource "google_compute_instance" "terraform-vm" {
+	# Uncomment below line to delete the instance
+	# count = 0
 	name = "terraform-instance"
 	machine_type = "f1-micro"
 	zone = "us-central1-a"
 	allow_stopping_for_update = true
+
+	scheduling {
+    	on_host_maintenance = "TERMINATE"
+  	}
 
 	boot_disk {
 		initialize_params {
