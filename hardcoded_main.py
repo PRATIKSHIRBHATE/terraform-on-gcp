@@ -1,8 +1,8 @@
 provider "google" {
-	project = var.project
-	credentials = file(var.credentials_file)
-	region = var.region
-	zone = var.zone
+	project = "mlflow-jet2"
+	credentials = "${file("credentials.json")}"
+	region = "us-central1"
+	zone = "us-centarl1-a"
 
 }
 
@@ -11,7 +11,7 @@ resource "google_compute_instance" "terraform-vm" {
 	# count = 0
 	name = "terraform-instance"
 	machine_type = "f1-micro"
-	zone = var.zone
+	zone = "us-central1-a"
 	allow_stopping_for_update = true
 
 	scheduling {
@@ -20,7 +20,7 @@ resource "google_compute_instance" "terraform-vm" {
 
 	boot_disk {
 		initialize_params {
-			image = var.os_image
+			image = "debian-cloud/debian-11"
 		}
 	}
 
@@ -41,7 +41,7 @@ resource "google_compute_network" "terraform_network" {
 resource "google_compute_subnetwork" "terraform_subnet" {
 	name = "terraform-subnetwork"
 	ip_cidr_range = "10.20.0.0/16"
-	region = var.region
+	region = "us-central1"
 	network = google_compute_network.terraform_network.id
 }
 
