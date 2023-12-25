@@ -5,8 +5,8 @@ provider "google" {
   zone        = var.zone
 }
 
-resource "google_storage_bucket" "terraform_datasets" {
-  name     = "terraform_datasets"
+resource "google_storage_bucket" "terraform_bucket" {
+  name     = var.bucket_name
   location = var.region  # Replace with your desired location
 
   uniform_bucket_level_access = true

@@ -1,5 +1,6 @@
 variable "project" {}
 variable "credentials_file" {}
+variable "bucket_name" {}
 
 
 variable "region" {
