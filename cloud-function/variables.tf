@@ -1,6 +1,6 @@
 variable "project" {}
 variable "credentials_file" {}
-
+variable "cloud_function_name" {}
 
 variable "region" {
 		default = "us-central1"
