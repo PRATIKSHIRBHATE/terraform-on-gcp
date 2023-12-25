@@ -5,11 +5,23 @@ provider "google" {
 	zone = var.zone
 
 }
+resource "google_project_service" "cloud_resource_manager" {
+	service = "cloudresourcemanager.googleapis.com"
+	project = var.project
+	disable_dependent_services = false
+}
+
+resource "google_project_service" "compute_engine" {
+	service = "compute.googleapis.com"
+	project = var.project
+	disable_dependent_services = false
+}
+
 
 resource "google_compute_instance" "terraform-vm" {
 	# Uncomment below line to delete the instance
 	# count = 0
-	name = "terraform-instance"
+	name = var.instance_name
 	machine_type = "f1-micro"
 	zone = var.zone
 	allow_stopping_for_update = true
