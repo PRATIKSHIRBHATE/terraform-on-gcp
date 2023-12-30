@@ -1,5 +1,7 @@
 variable "project" {}
-variable "credentials_file" {}
+variable "credentials_file" {
+  description = "Specify the absolute path of credentials json file"
+}
 variable "bucket_name" {}
 
 
