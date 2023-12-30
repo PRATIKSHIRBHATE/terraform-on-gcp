@@ -4,6 +4,6 @@ output "project_id" {
 }
 
 output "bucket_name" {
-    description = "Name of the bucket created"
-    value       = var.bucket_name
+  description = "Name of the bucket created"
+  value       = var.bucket_name
 }
