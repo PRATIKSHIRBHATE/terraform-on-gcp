@@ -1,10 +1,3 @@
-provider "google" {
-	project = var.project
-	credentials = file(var.credentials_file)
-	region = var.region
-	zone = var.zone
-
-}
 resource "google_project_service" "cloud_resource_manager" {
 	service = "cloudresourcemanager.googleapis.com"
 	project = var.project
@@ -19,8 +12,9 @@ resource "google_project_service" "compute_engine" {
 
 
 resource "google_compute_instance" "terraform-vm" {
-	# Uncomment below line to delete the instance
-	# count = 0
+	# Commented below lines create the multiple vm instances based on the count
+	# count = 2
+	# name = "terraform-vm"${count.index + 1}"
 	name = var.instance_name
 	machine_type = "f1-micro"
 	zone = var.zone
