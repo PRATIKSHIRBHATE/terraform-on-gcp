@@ -16,7 +16,7 @@ resource "google_compute_instance" "terraform-vm" {
 	# count = 2
 	# name = "terraform-vm"${count.index + 1}"
 	name = var.instance_name
-	machine_type = "f1-micro"
+	machine_type = var.instance_type
 	zone = var.zone
 	allow_stopping_for_update = true
 
@@ -37,6 +37,9 @@ resource "google_compute_instance" "terraform-vm" {
 			//necessary even empty
 		}
 	}
+	# Tells Terraform that this VM instance must be created only after the
+  	# storage bucket has been created.
+  	# depends_on = [google_storage_bucket.example_bucket]
 }
 
 resource "google_compute_network" "terraform_network" {

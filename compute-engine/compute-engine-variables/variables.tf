@@ -11,3 +11,9 @@ variable "zone" {
 variable "os_image" {
 	default = "debian-cloud/debian-11"
 }
+
+variable "instance_type" {
+  type        = string
+  description = "Disk type of the Google Compute instance"
+  default     = "f1-micro"
+  }
