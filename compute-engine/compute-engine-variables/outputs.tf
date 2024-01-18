@@ -16,3 +16,12 @@ output "instance_link" {
   value = google_compute_instance.terraform-vm.self_link
   description = "The URI of the created resource."
 }
+
+# Output variables to display disk sizes
+output "boot_disk_size" {
+  value = google_compute_instance.terraform-vm.boot_disk[0].initialize_params[0].size
+}
+
+output "data_disk_size" {
+  value = google_compute_disk.data_disk.size
+}

@@ -27,21 +27,36 @@ resource "google_compute_instance" "terraform-vm" {
 	boot_disk {
 		initialize_params {
 			image = var.os_image
+			size  = 20  # Change the boot disk size to 20 GB
 		}
 	}
-
+	
+	# Define a data disk
+    attached_disk  {
+		source = google_compute_disk.data_disk.id  # Use the ID of the existing data disk
+    	device_name = "data-disk"
+		}
 	network_interface {
-		network = google_compute_network.terraform_network.self_link
-		subnetwork = google_compute_subnetwork.terraform_subnet.self_link
+		network = "default" # google_compute_network.terraform_network.self_link
+		subnetwork = "default" # google_compute_subnetwork.terraform_subnet.self_link
 		access_config {
 			//necessary even empty
 		}
 	}
+	
 	# Tells Terraform that this VM instance must be created only after the
   	# storage bucket has been created.
   	# depends_on = [google_storage_bucket.example_bucket]
 }
 
+# Define a data disk
+resource "google_compute_disk" "data_disk" {
+  name  = "data-disk"
+  type  = "pd-standard"  # Choose the appropriate disk type
+  size  = 50  # Specify the size of the data disk in GB
+  zone  = var.zone
+}
+/*
 resource "google_compute_network" "terraform_network" {
 	name = "terraform-network"
 	auto_create_subnetworks = false
@@ -65,3 +80,4 @@ resource "google_compute_firewall" "allow-ssh" {
 
   source_ranges = ["10.20.0.0/16", "0.0.0.0/0"]  # Adjust this to the specific IP range or ranges you want to allow for SSH.
 }
+*/
