@@ -1,6 +1,6 @@
 resource "google_compute_firewall" "allow_ingress" {
   name    = "allow-ingress"
-  network = "default"  # Specify the network where the firewall rule applies, e.g., "default"
+  network = "demovpc1"  # Specify the network where the firewall rule applies, e.g., "default"
 
   allow {
     protocol = "icmp"  # Allow ping (ICMP) protocol
@@ -14,6 +14,11 @@ resource "google_compute_firewall" "allow_ingress" {
   allow {
     protocol = "tcp"   # Allow RDP (TCP) protocol
     ports    = ["3389"]
+  }
+
+  allow {
+    protocol       = "tcp"   # Allow SSH (TCP) protocol
+    ports          = ["22"]
   }
 
   # Add additional rules as needed for other protocols or ports
