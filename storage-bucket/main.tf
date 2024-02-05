@@ -10,3 +10,20 @@ resource "google_storage_bucket" "terraform_bucket" {
   #   environment = "production"
   # }
 }
+
+# Create a text object in cloud google_storage_bucket
+resource "google_storage_bucket_object" "my_object" {
+  name         = "new-object"
+  content      = "My name is Pratik"
+  content_type = "text/plain"
+  bucket       = google_storage_bucket.terraform_bucket.id
+}
+
+# Get bucket metadata
+data "google_storage_bucket" "my_object" {
+  name = google_storage_bucket.terraform_bucket.id
+}
+
+output "bucket_metadata" {
+  value = data.google_storage_bucket.my_object
+}
