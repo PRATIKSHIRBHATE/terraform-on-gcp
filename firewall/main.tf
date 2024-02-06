@@ -1,6 +1,6 @@
 resource "google_compute_firewall" "allow_ingress" {
-  name    = "allow-ingress"
-  network = "demovpc1"  # Specify the network where the firewall rule applies, e.g., "default"
+  name    = var.firewall_rule_name #"allow-ingress"
+  network = var.network_name #"demovpc1"  # Specify the network where the firewall rule applies, e.g., "default"
 
   allow {
     protocol = "icmp"  # Allow ping (ICMP) protocol
@@ -22,5 +22,5 @@ resource "google_compute_firewall" "allow_ingress" {
   }
 
   # Add additional rules as needed for other protocols or ports
-  source_ranges = ["10.3.1.0/24", "10.3.2.0/24", "0.0.0.0/0"]  # Adjust this to the specific IP range or ranges you want to allow for SSH.
+  source_ranges = var.ip_ranges # ["10.3.1.0/24", "10.3.2.0/24", "0.0.0.0/0"]  # Adjust this to the specific IP range or ranges you want to allow for SSH.
 }
