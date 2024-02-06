@@ -12,3 +12,5 @@ variable "zone" {
 variable "os_image" {
   default = "debian-cloud/debian-11"
 }
+
+variable "vpc_name" {}
