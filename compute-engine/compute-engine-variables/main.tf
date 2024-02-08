@@ -1,16 +1,3 @@
-/*
-resource "google_project_service" "cloud_resource_manager" {
-	service = "cloudresourcemanager.googleapis.com"
-	project = var.project
-	disable_dependent_services = false
-}
-
-resource "google_project_service" "compute_engine" {
-	service = "compute.googleapis.com"
-	project = var.project
-	disable_dependent_services = false
-}
-*/
 # Define Locals
 locals {
 	zone = "${var.region}-a"

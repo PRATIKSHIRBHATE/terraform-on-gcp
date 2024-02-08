@@ -1,5 +1,7 @@
 variable "project" {}
-variable "credentials_file" {}
+variable "credentials_file" {
+  sensitive = "true"
+}
 variable "instance_name" {}
 
 variable "region" {
