@@ -1,3 +1,4 @@
+/*
 resource "google_project_service" "cloud_resource_manager" {
 	service = "cloudresourcemanager.googleapis.com"
 	project = var.project
@@ -9,7 +10,11 @@ resource "google_project_service" "compute_engine" {
 	project = var.project
 	disable_dependent_services = false
 }
-
+*/
+# Define Locals
+locals {
+	zone = "${var.region}-a"
+}
 
 resource "google_compute_instance" "terraform-vm" {
 	# Commented below lines create the multiple vm instances based on the count
@@ -17,7 +22,7 @@ resource "google_compute_instance" "terraform-vm" {
 	# name = "terraform-vm"${count.index + 1}"
 	name = var.instance_name
 	machine_type = var.instance_type
-	zone = var.zone
+	zone = local.zone
 	allow_stopping_for_update = true
 
 	scheduling {
@@ -27,15 +32,16 @@ resource "google_compute_instance" "terraform-vm" {
 	boot_disk {
 		initialize_params {
 			image = var.os_image
-			size  = 20  # Change the boot disk size to 20 GB
+			size  = 10  # Change the boot disk size to 20 GB
 		}
 	}
-	
+	/*
 	# Define a data disk
     attached_disk  {
 		source = google_compute_disk.data_disk.id  # Use the ID of the existing data disk
     	device_name = "data-disk"
 		}
+	*/
 	network_interface {
 		network = "default" # google_compute_network.terraform_network.self_link
 		subnetwork = "default" # google_compute_subnetwork.terraform_subnet.self_link
@@ -48,7 +54,7 @@ resource "google_compute_instance" "terraform-vm" {
   	# storage bucket has been created.
   	# depends_on = [google_storage_bucket.example_bucket]
 }
-
+/*
 # Define a data disk
 resource "google_compute_disk" "data_disk" {
   name  = "data-disk"
@@ -56,7 +62,7 @@ resource "google_compute_disk" "data_disk" {
   size  = 50  # Specify the size of the data disk in GB
   zone  = var.zone
 }
-/*
+
 resource "google_compute_network" "terraform_network" {
 	name = "terraform-network"
 	auto_create_subnetworks = false
