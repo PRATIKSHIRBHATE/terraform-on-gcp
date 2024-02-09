@@ -24,3 +24,21 @@ resource "google_cloud_run_service" "pratik_shirbhate_service" {
     }
   }
 }
+
+# Code to allow the service for public without any authentication
+data "google_iam_policy" "noauth" {
+  binding {
+    role = "roles/run.invoker"
+    members = [
+      "allUsers",
+    ]
+  }
+}
+
+resource "google_cloud_run_service_iam_policy" "noauth" {
+  location    = google_cloud_run_service.pratik_shirbhate_service.location
+  project     = google_cloud_run_service.pratik_shirbhate_service.project
+  service     = google_cloud_run_service.pratik_shirbhate_service.name
+
+  policy_data = data.google_iam_policy.noauth.policy_data
+}
